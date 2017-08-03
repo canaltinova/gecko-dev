@@ -384,6 +384,11 @@ public:
 
   nsCSSCounterStyleRule* CounterStyleRuleForName(nsIAtom* aName);
 
+  // Append all the currently-active font feature values rules to aArray.
+  // Return true for success and false for failure.
+  bool AppendFontFeatureValuesRules(
+                              nsTArray<nsCSSFontFeatureValuesRule*>& aArray);
+
   already_AddRefed<ServoStyleContext>
   GetBaseContextForElement(dom::Element* aElement,
                            ServoStyleContext* aParentContext,

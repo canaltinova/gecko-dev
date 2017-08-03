@@ -343,6 +343,13 @@ StyleSetHandle::Ptr::CounterStyleRuleForName(nsIAtom* aName)
 }
 
 bool
+StyleSetHandle::Ptr::
+AppendFontFeatureValuesRules(nsTArray<nsCSSFontFeatureValuesRule*>& aArray)
+{
+  FORWARD(AppendFontFeatureValuesRules, (aArray));
+}
+
+bool
 StyleSetHandle::Ptr::EnsureUniqueInnerOnCSSSheets()
 {
   FORWARD(EnsureUniqueInnerOnCSSSheets, ());

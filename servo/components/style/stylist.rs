@@ -40,7 +40,7 @@ use std::fmt::Debug;
 use std::marker::PhantomData;
 use style_traits::viewport::ViewportConstraints;
 #[cfg(feature = "gecko")]
-use stylesheets::{CounterStyleRule, FontFaceRule};
+use stylesheets::{CounterStyleRule, FontFaceRule, FontFeatureValuesRule};
 use stylesheets::{CssRule, StyleRule};
 use stylesheets::{StylesheetInDocument, Origin, UserAgentStylesheets};
 use stylesheets::keyframes_rule::KeyframesAnimation;
@@ -171,6 +171,8 @@ pub struct Stylist {
 pub struct ExtraStyleData<'a> {
     /// A list of effective font-face rules and their origin.
     pub font_faces: &'a mut Vec<(Arc<Locked<FontFaceRule>>, Origin)>,
+    /// A list of effective font-feature-values rules.
+    pub font_feature_values: &'a mut Vec<Arc<Locked<FontFeatureValuesRule>>>,
     /// A map of effective counter-style rules.
     pub counter_styles: &'a mut FnvHashMap<Atom, Arc<Locked<CounterStyleRule>>>,
 }
@@ -180,12 +182,18 @@ impl<'a> ExtraStyleData<'a> {
     /// Clear the internal data.
     fn clear(&mut self) {
         self.font_faces.clear();
+        self.font_feature_values.clear();
         self.counter_styles.clear();
     }
 
     /// Add the given @font-face rule.
     fn add_font_face(&mut self, rule: &Arc<Locked<FontFaceRule>>, origin: Origin) {
         self.font_faces.push((rule.clone(), origin));
+    }
+
+    /// Add the given @font-feature-values rule.
+    fn add_font_feature_values(&mut self, rule: &Arc<Locked<FontFeatureValuesRule>>) {
+        self.font_feature_values.push(rule.clone());
     }
 
     /// Add the given @counter-style rule.
@@ -550,6 +558,10 @@ impl Stylist {
                 #[cfg(feature = "gecko")]
                 CssRule::FontFace(ref rule) => {
                     _extra_data.add_font_face(&rule, origin);
+                }
+                #[cfg(feature = "gecko")]
+                CssRule::FontFeatureValues(ref rule) => {
+                    _extra_data.add_font_feature_values(&rule);
                 }
                 #[cfg(feature = "gecko")]
                 CssRule::CounterStyle(ref rule) => {

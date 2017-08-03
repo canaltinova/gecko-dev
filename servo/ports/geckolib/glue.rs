@@ -53,6 +53,7 @@ use style::gecko_bindings::bindings::RawGeckoCSSPropertyIDListBorrowed;
 use style::gecko_bindings::bindings::RawGeckoComputedKeyframeValuesListBorrowedMut;
 use style::gecko_bindings::bindings::RawGeckoComputedTimingBorrowed;
 use style::gecko_bindings::bindings::RawGeckoFontFaceRuleListBorrowedMut;
+use style::gecko_bindings::bindings::RawGeckoFontFeatureValuesRuleListBorrowedMut;
 use style::gecko_bindings::bindings::RawGeckoServoAnimationValueListBorrowed;
 use style::gecko_bindings::bindings::RawGeckoServoAnimationValueListBorrowedMut;
 use style::gecko_bindings::bindings::RawGeckoServoStyleRuleListBorrowedMut;
@@ -3407,6 +3408,22 @@ pub extern "C" fn Servo_StyleSet_GetCounterStyleRule(raw_data: RawServoStyleSetB
         let guard = global_style_data.shared_lock.read();
         rule.read_with(&guard).get()
     }).unwrap_or(ptr::null_mut())
+}
+
+#[no_mangle]
+pub extern "C" fn Servo_StyleSet_GetFontFeatureValuesRule(raw_data: RawServoStyleSetBorrowed,
+                                                          rules: RawGeckoFontFeatureValuesRuleListBorrowedMut) {
+    let data = PerDocumentStyleData::from_ffi(raw_data).borrow();
+    debug_assert!(rules.len() == 0);
+
+    let global_style_data = &*GLOBAL_STYLE_DATA;
+    let _guard = global_style_data.shared_lock.read();
+
+    unsafe { rules.set_len(data.font_feature_values.len() as u32) };
+    // TODO: send the values
+    // for (src, dest) in data.font_feature_values.iter().zip(rules.iter_mut()) {
+    //     dest.mRule = src.read_with(&guard).clone().forget();
+    // }
 }
 
 #[no_mangle]

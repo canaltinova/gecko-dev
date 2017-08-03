@@ -1136,6 +1136,15 @@ ServoStyleSet::CounterStyleRuleForName(nsIAtom* aName)
   return Servo_StyleSet_GetCounterStyleRule(mRawSet.get(), aName);
 }
 
+bool
+ServoStyleSet::AppendFontFeatureValuesRules(
+                                 nsTArray<nsCSSFontFeatureValuesRule*>& aArray)
+{
+  UpdateStylistIfNeeded();
+  Servo_StyleSet_GetFontFeatureValuesRule(mRawSet.get(), &aArray);
+  return true;
+}
+
 already_AddRefed<ServoStyleContext>
 ServoStyleSet::ResolveForDeclarations(
   const ServoStyleContext* aParentOrNull,

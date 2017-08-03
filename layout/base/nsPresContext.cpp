@@ -288,7 +288,8 @@ nsPresContext::nsPresContext(nsIDocument* aDocument, nsPresContextType aType)
     mHasWarnedAboutTooLargeDashedOrDottedRadius(false),
     mQuirkSheetAdded(false),
     mNeedsPrefUpdate(false),
-    mHadNonBlankPaint(false)
+    mHadNonBlankPaint(false),
+    mInitFontFeatureValuesLookup(true)
 #ifdef RESTYLE_LOGGING
     , mRestyleLoggingEnabled(false)
 #endif
@@ -3107,6 +3108,42 @@ nsPresContext::GetBidiEngine()
   }
   return *mBidiEngine;
 }
+
+already_AddRefed<gfxFontFeatureValueSet>
+nsPresContext::GetFontFeatureValuesLookup()
+{
+  if (mInitFontFeatureValuesLookup) {
+    mInitFontFeatureValuesLookup = false;
+
+    StyleSetHandle styleSet = mShell->StyleSet();
+    nsTArray<nsCSSFontFeatureValuesRule*> rules;
+    styleSet->AppendFontFeatureValuesRules(rules);
+
+    mFontFeatureValuesLookup = new gfxFontFeatureValueSet();
+
+    uint32_t i, numRules = rules.Length();
+    for (i = 0; i < numRules; i++) {
+      nsCSSFontFeatureValuesRule *rule = rules[i];
+
+      const nsTArray<FontFamilyName>& familyList = rule->GetFamilyList().GetFontlist();
+      const nsTArray<gfxFontFeatureValueSet::FeatureValues>&
+        featureValues = rule->GetFeatureValues();
+
+      // for each family
+      size_t f, numFam;
+
+      numFam = familyList.Length();
+      for (f = 0; f < numFam; f++) {
+        mFontFeatureValuesLookup->AddFontFeatureValues(familyList[f].mName,
+                                                       featureValues);
+      }
+    }
+  }
+
+  RefPtr<gfxFontFeatureValueSet> lookup = mFontFeatureValuesLookup;
+  return lookup.forget();
+}
+
 
 nsRootPresContext::nsRootPresContext(nsIDocument* aDocument,
                                      nsPresContextType aType)

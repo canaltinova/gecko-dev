@@ -258,6 +258,15 @@ macro_rules! font_feature_values_blocks {
                 )*
                 Ok(())
             }
+
+            /// Returns length of all at-rules.
+            pub fn len(&self) -> usize {
+                let mut len = 0;
+                $(
+                    len += self.$ident.len();
+                )*
+                len
+            }
         }
 
         impl ToCssWithGuard for FontFeatureValuesRule {

@@ -1370,6 +1370,13 @@ Gecko_nsFont_Destroy(nsFont* aDest)
 }
 
 
+RefPtr<gfxFontFeatureValueSet>
+Gecko_nsFont_GetFontFeatureValuesLookup(RawGeckoPresContextBorrowed aPresContext)
+{
+  nsPresContext* presContext = const_cast<nsPresContext*>(aPresContext);
+  return presContext->GetFontFeatureValuesLookup();
+}
+
 void
 Gecko_ClearAlternateValues(nsFont* aFont, size_t aLength)
 {

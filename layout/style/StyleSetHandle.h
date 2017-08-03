@@ -27,6 +27,7 @@ class ShadowRoot;
 } // namespace mozilla
 class nsBindingManager;
 class nsCSSCounterStyleRule;
+class nsCSSFontFeatureValuesRule;
 struct nsFontFaceRuleContainer;
 class nsIAtom;
 class nsIContent;
@@ -183,6 +184,7 @@ public:
 
     inline bool AppendFontFaceRules(nsTArray<nsFontFaceRuleContainer>& aArray);
     inline nsCSSCounterStyleRule* CounterStyleRuleForName(nsIAtom* aName);
+    inline bool AppendFontFeatureValuesRules(nsTArray<nsCSSFontFeatureValuesRule*>& aArray);
 
     inline bool EnsureUniqueInnerOnCSSSheets();
     inline void SetNeedsRestyleAfterEnsureUniqueInner();
