@@ -34,6 +34,7 @@ EXPORTS += [
     'nsCSSCounterStyleRule.h',
     'nsCSSFontDescList.h',
     'nsCSSFontFaceRule.h',
+    'nsCSSFontFeatureValuesRule.h',
     'nsCSSKeywordList.h',
     'nsCSSKeywords.h',
     'nsCSSParser.h',

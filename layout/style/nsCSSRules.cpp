@@ -8,6 +8,7 @@
 #include "nsCSSRules.h"
 #include "nsCSSCounterStyleRule.h"
 #include "nsCSSFontFaceRule.h"
+#include "nsCSSFontFeatureValuesRule.h"
 
 #include "mozilla/Attributes.h"
 

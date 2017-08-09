@@ -161,55 +161,6 @@ protected:
 
 } // namespace mozilla
 
-class nsCSSFontFeatureValuesRule final : public mozilla::dom::CSSFontFeatureValuesRule
-{
-public:
-  nsCSSFontFeatureValuesRule(uint32_t aLineNumber, uint32_t aColumnNumber)
-    : mozilla::dom::CSSFontFeatureValuesRule(aLineNumber, aColumnNumber)
-  {
-  }
-
-  nsCSSFontFeatureValuesRule(const nsCSSFontFeatureValuesRule& aCopy)
-    // copy everything except our reference count
-    : mozilla::dom::CSSFontFeatureValuesRule(aCopy),
-      mFamilyList(aCopy.mFamilyList),
-      mFeatureValues(aCopy.mFeatureValues)
-  {
-  }
-
-  NS_DECL_ISUPPORTS_INHERITED
-
-#ifdef DEBUG
-  virtual void List(FILE* out = stdout, int32_t aIndent = 0) const override;
-#endif
-  virtual already_AddRefed<mozilla::css::Rule> Clone() const override;
-
-  // nsIDOMCSSFontFeatureValuesRule interface
-  NS_DECL_NSIDOMCSSFONTFEATUREVALUESRULE
-
-  // WebIDL interface
-  void GetCssTextImpl(nsAString& aCssText) const final;
-
-  const mozilla::FontFamilyList& GetFamilyList() { return mFamilyList; }
-  void SetFamilyList(const mozilla::FontFamilyList& aFamilyList);
-
-  void AddValueList(int32_t aVariantAlternate,
-                    nsTArray<gfxFontFeatureValueSet::ValueList>& aValueList);
-
-  const nsTArray<gfxFontFeatureValueSet::FeatureValues>& GetFeatureValues()
-  {
-    return mFeatureValues;
-  }
-
-  virtual size_t SizeOfIncludingThis(mozilla::MallocSizeOf aMallocSizeOf) const override;
-
-protected:
-  ~nsCSSFontFeatureValuesRule() {}
-
-  mozilla::FontFamilyList mFamilyList;
-  nsTArray<gfxFontFeatureValueSet::FeatureValues> mFeatureValues;
-};
-
 class nsCSSKeyframeRule;
 
 class nsCSSKeyframeStyleDeclaration final : public nsDOMCSSDeclaration

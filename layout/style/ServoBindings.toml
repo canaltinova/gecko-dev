@@ -68,6 +68,7 @@ headers = [
     "mozilla/SizeOfState.h",
     "nsCSSCounterStyleRule.h",
     "nsCSSFontFaceRule.h",
+    "nsCSSFontFeatureValuesRule.h",
     "nsMediaFeatures.h",
     "nsMediaList.h",
     "nsXBLBinding.h",

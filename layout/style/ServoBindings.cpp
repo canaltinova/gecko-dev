@@ -14,6 +14,7 @@
 #include "nsAttrValueInlines.h"
 #include "nsCSSCounterStyleRule.h"
 #include "nsCSSFontFaceRule.h"
+#include "nsCSSFontFeatureValuesRule.h"
 #include "nsCSSFrameConstructor.h"
 #include "nsCSSProps.h"
 #include "nsCSSParser.h"

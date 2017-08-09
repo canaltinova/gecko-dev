@@ -44,6 +44,7 @@
 #include "nsRuleNode.h"
 #include "gfxPlatform.h"
 #include "nsCSSRules.h"
+#include "nsCSSFontFeatureValuesRule.h"
 #include "nsFontFaceLoader.h"
 #include "mozilla/EffectCompositor.h"
 #include "mozilla/EventListenerManager.h"

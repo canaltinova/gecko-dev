@@ -32,6 +32,7 @@
 #include "nsCSSRules.h"
 #include "nsCSSCounterStyleRule.h"
 #include "nsCSSFontFaceRule.h"
+#include "nsCSSFontFeatureValuesRule.h"
 #include "mozilla/css/NameSpaceRule.h"
 #include "nsTArray.h"
 #include "mozilla/StyleSheetInlines.h"

@@ -43,6 +43,7 @@
 #include "nsCSSRules.h"
 #include "nsCSSCounterStyleRule.h"
 #include "nsCSSFontFaceRule.h"
+#include "nsCSSFontFeatureValuesRule.h"
 #include "nsStyleSet.h"
 #include "mozilla/dom/Element.h"
 #include "nsNthIndexCache.h"
