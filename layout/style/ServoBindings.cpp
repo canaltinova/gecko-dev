@@ -10,6 +10,7 @@
 #include "ErrorReporter.h"
 #include "GeckoProfiler.h"
 #include "gfxFontFamilyList.h"
+#include "gfxFontFeatures.h"
 #include "nsAnimationManager.h"
 #include "nsAttrValueInlines.h"
 #include "nsCSSCounterStyleRule.h"
@@ -1366,6 +1367,20 @@ Gecko_nsFont_Destroy(nsFont* aDest)
   aDest->~nsFont();
 }
 
+
+RefPtr<gfxFontFeatureValueSet>
+Gecko_nsFont_GetFontFeatureValuesLookup(RawGeckoPresContextBorrowed aPresContext)
+{
+  nsPresContext* presContext = const_cast<nsPresContext*>(aPresContext);
+  return presContext->GetFontFeatureValuesLookup();
+}
+
+void
+Gecko_nsFont_SetFontFeatureValuesArray(nsCSSFontFeatureValuesRule* aRule, int32_t aLength)
+{
+  aRule->mFeatureValues.Clear();
+  aRule->mFeatureValues.SetCapacity(aLength);
+}
 
 void
 Gecko_ClearAlternateValues(nsFont* aFont, size_t aLength)

@@ -29,6 +29,19 @@ impl ToNsCssValue for FamilyName {
     }
 }
 
+
+// TODO: We won't need this probably. Remove it.
+impl ToNsCssValue for Vec<FamilyName> {
+    fn convert(self, nscssvalue: &mut nsCSSValue) {
+        let target_families = nscssvalue
+            .set_array(self.len() as i32)
+            .as_mut_slice();
+        for (family, target) in self.iter().zip(target_families) {
+            target.set_string_from_atom(&family.name);
+        }
+    }
+}
+
 impl ToNsCssValue for font_weight::T {
     fn convert(self, nscssvalue: &mut nsCSSValue) {
         nscssvalue.set_integer(self.0 as i32)

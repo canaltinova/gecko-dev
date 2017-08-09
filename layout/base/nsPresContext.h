@@ -59,9 +59,11 @@ class nsFrameManager;
 class nsILinkHandler;
 class nsIAtom;
 class nsIRunnable;
+class gfxFontFeatureValueSet;
 class gfxUserFontEntry;
 class gfxUserFontSet;
 class gfxTextPerfMetrics;
+class nsCSSFontFeatureValuesRule;
 class nsPluginFrame;
 class nsTransitionManager;
 class nsAnimationManager;
@@ -1184,6 +1186,9 @@ public:
 
   nsBidi& GetBidiEngine();
 
+  // Fetch object for looking up font feature values
+  already_AddRefed<gfxFontFeatureValueSet> GetFontFeatureValuesLookup();
+
 protected:
   friend class nsRunnableMethod<nsPresContext>;
   void ThemeChangedInternal();
@@ -1229,6 +1234,9 @@ protected:
   void UpdateCharSet(NotNull<const Encoding*> aCharSet);
 
   static bool NotifyDidPaintSubdocumentCallback(nsIDocument* aDocument, void* aData);
+
+  // whether font feature values lookup object needs initialization
+  RefPtr<gfxFontFeatureValueSet> mFontFeatureValuesLookup;
 
 public:
   void DoChangeCharSet(NotNull<const Encoding*> aCharSet);
@@ -1497,6 +1505,8 @@ protected:
 
   // Has NotifyNonBlankPaint been called on this PresContext?
   unsigned              mHadNonBlankPaint : 1;
+
+  unsigned              mInitFontFeatureValuesLookup : 1;
 
 #ifdef RESTYLE_LOGGING
   // Should we output debug information about restyling for this document?

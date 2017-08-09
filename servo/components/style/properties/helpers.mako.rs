@@ -376,6 +376,9 @@
                                      computed,
                                  );
                             % else:
+                                % if product == "gecko" and property.ident == "font_variant_alternates":
+                                    longhands::font_variant_alternates::font_feature_values_lookup(context);
+                                % endif
                                 context.builder.set_${property.ident}(computed)
                             % endif
                         % endif

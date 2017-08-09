@@ -50,7 +50,7 @@ operator==(const gfxAlternateValue& a, const gfxAlternateValue& b)
 
 class gfxFontFeatureValueSet final {
 public:
-    NS_INLINE_DECL_REFCOUNTING(gfxFontFeatureValueSet)
+    NS_INLINE_DECL_THREADSAFE_REFCOUNTING(gfxFontFeatureValueSet)
 
     gfxFontFeatureValueSet();
 

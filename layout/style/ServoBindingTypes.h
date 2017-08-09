@@ -45,6 +45,7 @@ enum class MatrixTransformOperator: uint8_t;
 class nsCSSPropertyIDSet;
 class nsCSSValue;
 struct nsFontFaceRuleContainer;
+class nsCSSFontFeatureValuesRule;
 class nsIDocument;
 class nsINode;
 class nsPresContext;
@@ -68,6 +69,7 @@ typedef nsTArray<mozilla::PropertyValuePair> RawGeckoPropertyValuePairList;
 typedef nsTArray<mozilla::ComputedKeyframeValues> RawGeckoComputedKeyframeValuesList;
 typedef nsStyleAutoArray<mozilla::StyleAnimation> RawGeckoStyleAnimationList;
 typedef nsTArray<nsFontFaceRuleContainer> RawGeckoFontFaceRuleList;
+typedef nsTArray<nsCSSFontFeatureValuesRule*> RawGeckoFontFeatureValuesRuleList;
 typedef mozilla::AnimationPropertySegment RawGeckoAnimationPropertySegment;
 typedef mozilla::ComputedTiming RawGeckoComputedTiming;
 typedef nsTArray<const RawServoStyleRule*> RawGeckoServoStyleRuleList;
@@ -168,6 +170,7 @@ DECL_BORROWED_REF_TYPE_FOR(RawGeckoStyleAnimationList)
 DECL_BORROWED_MUT_REF_TYPE_FOR(nsTimingFunction)
 DECL_BORROWED_REF_TYPE_FOR(nsTimingFunction)
 DECL_BORROWED_MUT_REF_TYPE_FOR(RawGeckoFontFaceRuleList)
+DECL_BORROWED_MUT_REF_TYPE_FOR(RawGeckoFontFeatureValuesRuleList)
 DECL_BORROWED_REF_TYPE_FOR(RawGeckoAnimationPropertySegment)
 DECL_BORROWED_REF_TYPE_FOR(RawGeckoComputedTiming)
 DECL_BORROWED_MUT_REF_TYPE_FOR(RawGeckoServoStyleRuleList)

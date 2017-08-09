@@ -58,8 +58,10 @@ namespace mozilla {
 using mozilla::FontFamilyList;
 using mozilla::FontFamilyType;
 using mozilla::ServoElementSnapshot;
+class gfxFontFeatureValueSet;
 class nsCSSCounterStyleRule;
 class nsCSSFontFaceRule;
+class nsCSSFontFeatureValuesRule;
 struct nsMediaFeature;
 struct nsStyleList;
 struct nsStyleImage;
@@ -305,6 +307,9 @@ void Gecko_CopyFontFamilyFrom(nsFont* dst, const nsFont* src);
 void Gecko_nsFont_InitSystem(nsFont* dst, int32_t font_id,
                              const nsStyleFont* font, RawGeckoPresContextBorrowed pres_context);
 void Gecko_nsFont_Destroy(nsFont* dst);
+
+RefPtr<gfxFontFeatureValueSet> Gecko_nsFont_GetFontFeatureValuesLookup(RawGeckoPresContextBorrowed pres_context);
+void Gecko_nsFont_SetFontFeatureValuesArray(nsCSSFontFeatureValuesRule* rule, int32_t len);
 
 // Font variant alternates
 void Gecko_ClearAlternateValues(nsFont* font, size_t length);

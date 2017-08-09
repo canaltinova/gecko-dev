@@ -20,7 +20,7 @@ use selector_map::PrecomputedHashMap;
 use servo_arc::Arc;
 use shared_lock::{Locked, StylesheetGuards, SharedRwLockReadGuard};
 use stylesheet_set::StylesheetSet;
-use stylesheets::{Origin, StylesheetContents, StylesheetInDocument};
+use stylesheets::{FontFeatureValuesRule, Origin, StylesheetContents, StylesheetInDocument};
 use stylist::{ExtraStyleData, Stylist};
 
 /// Little wrapper to a Gecko style sheet.
@@ -123,6 +123,9 @@ pub struct PerDocumentStyleDataImpl {
     /// List of effective font face rules.
     pub font_faces: Vec<(Arc<Locked<FontFaceRule>>, Origin)>,
 
+    /// List of effective font feature values rules.
+    pub font_feature_values: Vec<Arc<Locked<FontFeatureValuesRule>>>,
+
     /// Map for effective counter style rules.
     pub counter_styles: PrecomputedHashMap<Atom, Arc<Locked<CounterStyleRule>>>,
 }
@@ -143,6 +146,7 @@ impl PerDocumentStyleData {
             stylist: Stylist::new(device, quirks_mode.into()),
             stylesheets: StylesheetSet::new(),
             font_faces: vec![],
+            font_feature_values: vec![],
             counter_styles: PrecomputedHashMap::default(),
         }))
     }
@@ -171,6 +175,7 @@ impl PerDocumentStyleDataImpl {
 
         let mut extra_data = ExtraStyleData {
             font_faces: &mut self.font_faces,
+            font_feature_values: &mut self.font_feature_values,
             counter_styles: &mut self.counter_styles,
         };
 

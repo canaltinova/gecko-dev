@@ -1342,6 +1342,15 @@ ${helpers.single_keyword_system("font-kerning",
 
     <%self:simple_system_boilerplate name="font_variant_alternates"></%self:simple_system_boilerplate>
 
+    #[cfg(feature = "gecko")]
+    fn font_feature_values_lookup(context: &mut Context) {
+        use gecko_bindings::bindings::Gecko_nsFont_GetFontFeatureValuesLookup;
+        let lookup = unsafe {
+            Gecko_nsFont_GetFontFeatureValuesLookup(context.device().pres_context())
+        };
+        context.builder.mutate_font().gecko_mut().mFont.featureValueLookup = lookup;
+    }
+
     impl ToCss for VariantAlternates {
         fn to_css<W>(&self, dest: &mut W) -> fmt::Result where W: fmt::Write {
             match *self {
